@@ -1,0 +1,208 @@
+{% extends "./layout.html" %}
+{% load static %}
+
+
+   {% block body %}
+
+<head>
+    <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.content h6
+{
+    border: 1px solid black;
+    padding: 5px 10px;
+    display: inline-block;
+    text-align: centre;
+}
+
+.content2
+{
+    position: center;
+    text-align: center;
+    padding: 50px 60px;
+}
+
+
+.section-title
+{
+    position: centre;
+    padding: 10px 20px;
+    text-align: centre;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    border-bottom: 2px solid #024950;
+   
+
+
+}
+
+
+.container {
+    display: flex;
+    height: 100vh;
+    justify-content: centre;
+    padding-bottom: 50px;
+    
+}
+
+.image-container {
+    flex: 1;
+    position: relative;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.update-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #00bfff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.text-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px;
+    background-color: white;
+}
+
+.text-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.text-container h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.text-container p {
+    font-size: 18px;
+    margin-bottom: 80px;
+}
+
+.explore-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.explore-btn:hover {
+    background-color: #333;
+}
+</style>
+           
+</head>
+
+
+
+
+
+
+<div class="content">
+             <div class = "content2"><h6> Aria Valuers</h6></div>
+            <div class="section trainee-program">
+                            <div class="section services">
+           <div class="container">
+        <div class="image-container">
+            <img src= "{% static 'main/banner.jpg' %}" alt="House in Nature">
+            
+        </div>
+        <div class="text-container">
+
+            <h2>Welcome</h2>
+            <h1>Experience Property Valuing Excellence</h1>
+            <p>Discover the perfect home for you with our expert real estate services</p>
+            <a href="#" class="explore-btn">Explore Properties</a>
+        </div>
+    </div>
+
+
+
+
+
+        <div class = "post-container">
+   <div class = "section-title ">
+   <h2>What's New?</h2>
+    </div>
+
+
+
+            {% for post in posts %}
+            <div class = "card mt-2">
+                <div class="card-header"><strong>@{{ post.author.username }}</strong></div>
+            </div>
+            <div class = "card-body d-flex flex-row justirfy-content-between">
+                <div>
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p>{{post.description}}</p>
+                </div>
+                <div>
+                   {% if user == post.author or perms.signup.delete_post %}
+                      <form method ="post">
+                          {% csrf_token %}
+                          <button type = "submit" class = "btn btn-warning" name ="post-id" value = "{{post.id}}">Delete</button>
+                      </form>
+                      {% endif %}
+                      {% if user.is_staff %}
+
+                      <form method ="post">
+                          {% csrf_token %}
+                          <button type = "submit" class = "btn btn-danger" name ="user-id" value = "{{post.author.id}}">Ban User </button>
+                      </form>
+                      
+
+                      {% endif %}
+
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                {{post.created_at}}
+            </div>
+        </div>
+        </div>
+        {% empty %}
+        <p>No posts yet :( </p>
+        {% endfor %}
+
+
+
+
+        <div class="footer">
+            <h4>Get in Touch</h4>
+            <p>+675 7208 8203</p>
+            <p>+675 4302 234</p>
+            <p><a href="mailto:samantha@buysmartpropertyreports.com">info@ariaconsultants.com.pg</a></p>
+            <p>PO Box 3144, Lae, Papua New Guinea</p>
+        </div>
+              {% endblock %}
+ 

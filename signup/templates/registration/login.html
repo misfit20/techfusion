@@ -1,0 +1,18 @@
+{% extends './base.html' %}
+{% block title %}Log In {% endblock %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+<h1 class = "form_title">Member Login</h1>       
+<div class = "row mb-3">
+    <div class = "col-sm-6 container">
+        
+    <form method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <p>Don't have an account yet? Create one <a href="/signup">Here</a></p>
+        <button type="submit" class=" btn btn-primary button-27">Login</button>
+    </form>
+</div>
+</div>
+{% endblock %}
